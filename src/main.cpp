@@ -1,21 +1,18 @@
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "../include/doctest.h"
 #include "operands.cpp"
-
-
 
 int main(void)
 {
- IOperand<int16_t> int16 = IOperand<int16_t>(10);
- IOperand<int16_t> int16_2 = IOperand<int16_t>(30);
-  //
-  auto *res = int16 + int16_2;
+  doctest::Context ctx;
 
+  ctx.setOption("abort-after", 5);
+  ctx.setOption("no-breaks", true);
 
- std::cout << res->getValue() << '\n';
-// std::cout << res.getValue() << '\n';
-  //
-  //
+  int res = ctx.run();
 
-  delete res;
+  if(ctx.shouldExit())
+      return res;
 
-return 0;
+  return res;
 }
