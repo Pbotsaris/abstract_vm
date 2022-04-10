@@ -4,9 +4,10 @@
 #include <type_traits>
 #include <typeinfo>
 #include <cstdint>
-#include <string>
 #include <algorithm>
+#include <string>
 #include <cmath>
+#include <array>
 enum eOperandType {Int8_t, Int16_t, Int32_t, Float_t, Double_t};
 
 
@@ -17,12 +18,14 @@ class IOperandBase
 
   virtual int           getPrecision() const = 0;
   virtual eOperandType  getType() const = 0;
+  
+  /* cannot inherit templated methods */
+ // virtual IOperandBase* operator +(const IOperandBase &rhs) const = 0;
+ // virtual IOperandBase* operator -(const IOperandBase &rhs) const = 0;
+ // virtual IOperandBase* operator *(const IOperandBase &rhs) const = 0;
+ // virtual IOperandBase* operator /(const IOperandBase &rhs) const = 0;
+ // virtual IOperandBase* operator %(const IOperandBase &rhs) const = 0;
 
-  virtual IOperandBase* operator +(const IOperandBase &right_hand_side) const = 0;
-  virtual IOperandBase* operator -(const IOperandBase &right_hand_side) const = 0;
-  virtual IOperandBase* operator *(const IOperandBase &right_hand_side) const = 0;
-  virtual IOperandBase* operator /(const IOperandBase &right_hand_side) const = 0;
-  virtual IOperandBase* operator %(const IOperandBase &right_hand_side) const = 0;
   virtual ~IOperandBase() {}
 };
 
