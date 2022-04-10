@@ -8,11 +8,15 @@ template<typename T, typename U>
   {
    /* conditions also handles when comparing int32_t and floats which are the same size */
     using type = 
-            typename std::conditional<(
-                           !(std::is_same<T, float>::value 
-                            && std::is_same<U, int32_t>::value)
-                            &&(sizeof(U) >= sizeof(T))),
-                            U, T>::type;
+       typename std::conditional
+         <
+           (
+            !( std::is_same<T, float>::value 
+               && std::is_same<U, int32_t>::value
+             )
+            && (sizeof(U) >= sizeof(T))
+           ), U, T
+         >::type;
   };
 
 template <typename T>
@@ -35,38 +39,44 @@ template <typename T>
 
        template<typename U> auto operator+(const IOperand<U>& rhs) const
        {
-          using t = typename return_type<T, U>::type;  
-          t sum = m_value + rhs.getValue();
-          return new IOperand<t>(sum);
+          using return_t     = typename return_type<T, U>::type;  
+          return_t sum       = m_value + rhs.getValue();
+
+          return new IOperand<return_t>(sum);
        }
 
        template<typename U> auto operator-(const IOperand<U>& rhs) const
        {
-          using t = typename return_type<T, U>::type;  
-          t difference = m_value - rhs.getValue();
-          return new IOperand<t>(difference);
+          using return_t      = typename return_type<T, U>::type;  
+          return_t difference = m_value - rhs.getValue();
+
+          return new IOperand<return_t>(difference);
        }
 
         template<typename U> auto operator*(const IOperand<U>& rhs) const
        {
-          using t = typename return_type<T, U>::type;  
-          t product = m_value * rhs.getValue();
-          return new IOperand<t>(product);
+          using return_t      = typename return_type<T, U>::type;  
+          return_t product    = m_value * rhs.getValue();
+
+          return new IOperand<return_t>(product);
        }
 
         template<typename U> auto operator/(const IOperand<U>& rhs) const
        {
-          using t = typename return_type<T, U>::type;  
-          t division = m_value / rhs.getValue();
-          return new IOperand<t>(division);
+          using return_t      = typename return_type<T, U>::type;  
+          return_t division   = m_value / rhs.getValue();
+      
+          return new IOperand<return_t>(division);
        }
 
        template<typename U> auto operator%(const IOperand<U>& rhs) const
        {
-          using t = typename return_type<T, U>::type;  
-          t modulo = fmod(m_value, rhs.getValue());
-          return new IOperand<t>(modulo);
+          using return_t      = typename return_type<T, U>::type;  
+          return_t modulo     = fmod(m_value, rhs.getValue());
+
+          return new IOperand<return_t>(modulo);
        }
   };
+
 #endif
 
