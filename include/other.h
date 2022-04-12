@@ -1,7 +1,8 @@
-#define IO_OPERAD_H
-#ifndef IO_OPERAND_H
-#include "../include/IOperandBase.h"
+#define OTHER2_H
+#ifndef OTHER2_H
+
 #include "doctest.h"
+#include "../include/IOperandBase.h"
 
 template<typename T, typename U>
   struct return_type
@@ -27,6 +28,14 @@ template <typename T>
        T            m_value;
        std::string  m_string;
        eOperandType m_type;
+
+     template<typename Derived, typename Del>
+    static std::unique_ptr<Derived> 
+     unique_ptr_cast( std::unique_ptr<IOperandBase> &&p )
+    {
+        auto d = static_cast<Derived *>(p.release());
+        return std::unique_ptr<Derived, Del>(d, std::move(p.get_deleter()));
+    }
 
      public:
        IOperand(T value);
@@ -76,7 +85,7 @@ template <typename T>
 
           return new IOperand<return_t>(modulo);
        }
-  };
+    };
 
 #endif
 

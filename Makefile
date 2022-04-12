@@ -6,13 +6,13 @@ TEST_OBJ=tests/obj
 CFLAGS += -Wall -Wextra -g3 -Iinclude -fsanitize=address 
 CPP_FLAGS = -Wpedantic -std=c++17 -Wcast-qual -Wnon-virtual-dtor -Woverloaded-virtual -Wold-style-cast
 
-CC=g++
+CC=clang++
 TARGET=$(BIN)/my_abstract_vm
 RM=rm -rf
 
 $(shell mkdir -p obj bin tests/obj)
-
 SRCS=$(wildcard $(SRC)/*.cpp)
+
 OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
 
 all: $(TARGET)
