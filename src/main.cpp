@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "../include/doctest.h"
-#include "../include/IOperand.h"
+#include "operands.cpp"
 
 int main(void)
 {
@@ -13,8 +13,6 @@ int main(void)
 
   if(ctx.shouldExit())
       return res;
-
- //   auto n = IOperand<int8_t>(8);
 
   return res;
 }
