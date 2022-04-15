@@ -129,31 +129,74 @@ template <typename T>
 
 /* TESTS */
 
-TEST_CASE("Operands")
+    TEST_CASE("IOperands: Public methods")
+    {
+        auto i8  = Operands<int8_t>(2);
+        auto i16 = Operands<int16_t>(200);
+        auto i32 = Operands<int32_t>(200);
+        auto f   = Operands<float>(10.20);
+        auto d   = Operands<double>(10.20);
+
+        SUBCASE("toString()")
+        {
+            CHECK("2 Int8_t"            == i8.toString());
+            CHECK("200 Int16_t"         == i16.toString());
+            CHECK("200 Int32_t"         == i32.toString());
+            CHECK("10.200000 Float_t"   == f.toString());
+            CHECK("10.200000 Double_t"  == d.toString());
+        }
+
+        SUBCASE("getValue()")
+        {
+            CHECK("2"                    == i8.toString());
+            CHECK("200"                  == i16.toString());
+            CHECK("200"                  == i32.toString());
+            CHECK("10.20f"               == f.toString());
+            CHECK("10.20"                == d.toString());
+        }
+
+        SUBCASE("getPrecision() & getType()")
+        {
+            CHECK(Int8_t              == i8.getType());
+            CHECK(Int16_t             == i16.getType());
+            CHECK(Int32_t             == i32.getType());
+            CHECK(Float_t             == f.getType());
+            CHECK(Double_t            == d.getType());
+        }
+    }
+
+    TEST_CASE("IOperands: Precision")
 {
-    SUBCASE("create very type")
-    {
-        auto i8 = Operands<int8_t>(10);
-        auto i16 = Operands<int16_t>(20);
-        auto i32 = Operands<int32_t>(100);
-        auto f = Operands<float>(30.20);
-        auto d = Operands<double>(40.2020);
+    SUBCASE("same precision: int8_t") {
+        auto n1 = Operands<int8_t>(10);
+        auto n2 = Operands<int8_t>(30);
 
-        CHECK(i8.toString() == "10");
-        CHECK(i16.toString() == "20");
-        CHECK(i1.toString() == "20");
+        auto *result = n1 + n2;
+        CHECK(result->toString() == "40");
+        CHECK(result->getPrecision() == Int8_t);
+        delete result;
 
     }
 
-    SUBCASE("same type")
-    {
-        auto i8 = Operands<int8_t>(2);
-        auto i8_two = Operands<int8_t>(3);
+    SUBCASE("same precision: int16_t") {
+        Operands<int16_t> n1 = Operands<int16_t>(10);
+        Operands<int16_t> n2 = Operands<int16_t>(30);
 
-        auto res = i8 + i8_two;
-        CHECK(res->toString() == "5");
-        delete res;
+        auto *result = n1 + n2;
+        CHECK(result->toString() == "40");
+        CHECK(result->getPrecision() == Int16_t);
+
+        delete result;
     }
 
-}
+    SUBCASE("same precision: int32_t") {
+        Operands<int32_t> n2 = Operands<int32_t>(30);
+        Operands<int32_t> n1 = Operands<int32_t>(10);
 
+        auto *result = n1 + n2;
+        CHECK(result->toString() == "40");
+        CHECK(result->getPrecision() == Int32_t);
+
+        delete result;
+    }
+};
