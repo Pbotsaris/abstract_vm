@@ -3,8 +3,6 @@
 #include "../include/IOperandBase.h"
 #include "doctest.h"
 
-typedef IOperand* (*FactoryFunction)(const std::string& value);
-
 template <typename T>
 
   class Operands: public IOperand
@@ -12,12 +10,12 @@ template <typename T>
      private:
        struct         Private;
        std::string    m_value;
-       T              m_numval;
+       int            m_precision;
        eOperandType   m_type;
 
      public:
-       Operands(T value);
-       ~Operands();
+       explicit Operands(T value);
+       ~Operands() override;
 
        eOperandType          getType() const override;
        int                   getPrecision() const override;
@@ -30,7 +28,5 @@ template <typename T>
        IOperand*             operator %(const IOperand &rhs) const override;
   };
 
-
-struct Convert;
 #endif
 

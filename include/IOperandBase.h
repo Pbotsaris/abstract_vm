@@ -9,8 +9,13 @@
 #include <cmath>
 #include <map>
 #include <array>
+#include <sstream>
+#include <iomanip>
 
-#define FLOAT_INDEX 4
+#define INT_PRECISION 0
+#define FLOAT_PRECISION 5
+#define DOUBLE_PRECISION 14
+
 enum eOperandType {Int8_t, Int16_t, Int32_t, Float_t, Double_t};
 
 class IOperand 

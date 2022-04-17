@@ -2,9 +2,10 @@
 #define FACTORY_H
 #include "Operands.h"
 
+typedef IOperand* (*FactoryFunction)(const std::string& value);
+
 struct FactoryFunctions
 {
-
     static IOperand* createInt8(const std::string& value)
     {
         auto val = static_cast<int8_t>(std::stoi(value));
@@ -34,7 +35,6 @@ struct FactoryFunctions
         double val = std::stod(value);
         return new Operands<double>(val);
     }
-
 };
 
 struct Factory
@@ -48,7 +48,7 @@ private:
         factory.insert(std::pair<eOperandType, FactoryFunction>(Int16_t, &FactoryFunctions::createInt16));
         factory.insert(std::pair<eOperandType, FactoryFunction>(Int32_t, &FactoryFunctions::createInt32));
         factory.insert(std::pair<eOperandType, FactoryFunction>(Float_t, &FactoryFunctions::createFloat));
-        factory.insert(std::pair<eOperandType, FactoryFunction>(Float_t, &FactoryFunctions::createDouble));
+        factory.insert(std::pair<eOperandType, FactoryFunction>(Double_t, &FactoryFunctions::createDouble));
     };
 
 public:
