@@ -52,7 +52,7 @@ private:
     };
 
 public:
-    static Factory& getInstance()
+    static Factory& getInstance() noexcept
     {
         static Factory instance = Factory();
         return instance;
@@ -66,4 +66,7 @@ public:
         return factory.at(type)(value);
     };
 };
+
+static Factory &factory = Factory::getInstance ();
+
 #endif

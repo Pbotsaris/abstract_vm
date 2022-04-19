@@ -3,12 +3,10 @@
 
 /* Constructor & Destructor */
 
-static Factory &factory = Factory::getInstance ();
-
 template<typename T>
 Operands<T>::Operands (T value)
 {
-  m_type = Private::setType ();
+  m_type = Private::getType ();
   m_precision = Private::getPrecision(m_type);
   m_value = Private::toString(value, m_precision);
   Private::removeTrailingZeros(m_value);
@@ -28,7 +26,7 @@ eOperandType Operands<T>::getType () const
 template<typename T>
 int Operands<T>::getPrecision () const
 {
-  return m_type;
+  return m_precision;
 }
 
 template<typename T>
@@ -91,7 +89,7 @@ IOperand *Operands<T>::operator% (const IOperand &rhs) const
 
 template<typename T>
 struct Operands<T>::Private {
-  static eOperandType setType ()
+  static eOperandType getType ()
   {
     if (std::is_same<T, int8_t>::value)
       return Int8_t;
@@ -153,17 +151,10 @@ struct Operands<T>::Private {
     else
       return std::stoi (value);
   }
-
-  template<typename RT>
-  static RT convertLeft (const IOperand &lhs)
-  {
-
-    return convert (lhs);
-  }
 };
 
 /* TESTS */
-TEST_CASE("IOperands: Public methods")
+TEST_CASE("IOperands: Public methods") // NOLINT(cert-err58-cpp)
 {
   auto i8 = Operands<int8_t> (2);
   auto i16 = Operands<int16_t> (200);
@@ -190,7 +181,7 @@ TEST_CASE("IOperands: Public methods")
     }
 }
 
-TEST_CASE("IOperands: Precision")
+TEST_CASE("IOperands: Precision") // NOLINT(cert-err58-cpp)
 {
   SUBCASE("same precision: int8_t")
     {
@@ -309,7 +300,7 @@ TEST_CASE("IOperands: Precision")
     }
 }
 
-TEST_CASE("IOperands: Operations")
+TEST_CASE("IOperands: Operations") // NOLINT(cert-err58-cpp)
 {
   SUBCASE("float <> double")
     {
