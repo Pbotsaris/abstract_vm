@@ -61,7 +61,7 @@ struct Factory {
   Factory (Factory const &) = delete;              // Don't Implement
   void operator= (Factory const &) = delete;
 
-  IOperand *create (eOperandType type, const std::string &value)
+  IOperand *create (eOperandType type, const std::string &value) noexcept
   {
     return factory.at (type) (value);
   };
