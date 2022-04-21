@@ -6,15 +6,6 @@ void exceptions::EmptyStack::throwE (bool valid)
     throw exceptions::EmptyStack();
 };
 
-void exceptions::EmptyStack::tryCatch(bool valid)
-{
-  try {
-    if(valid)
-      throw exceptions::EmptyStack();
-  } catch(exceptions::EmptyStack& err) {
-    exceptions::EmptyStack::print();
-  }
-}
 
 void exceptions::EmptyStack::print()
 {
@@ -24,5 +15,20 @@ void exceptions::EmptyStack::print()
 exceptions::ExceptionType exceptions::EmptyStack::getType()
 {
   return exceptions::empty_stack;
+}
+
+void exceptions::UnexpectedToken::throwE ()
+{
+    throw exceptions::UnexpectedToken();
+};
+
+void exceptions::UnexpectedToken::print()
+{
+  std::cout << "Unexpected Token" << "\n";
+}
+
+exceptions::ExceptionType exceptions::UnexpectedToken::getType()
+{
+  return exceptions::unexpected_token;
 }
 
