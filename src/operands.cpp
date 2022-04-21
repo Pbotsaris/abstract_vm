@@ -42,7 +42,7 @@ IOperand *Operands<T>::operator+ (const IOperand &rhs) const
   T left_side = Private::convert (m_value);
 
   std::string result = Calculator::sum (left_side, getPrecision(), rhs);
-  return factory.create (return_type, result);
+  return factory::factory.create (return_type, result);
 }
 
 template<typename T>
@@ -52,7 +52,7 @@ IOperand *Operands<T>::operator- (const IOperand &rhs) const
   T left_side = Private::convert (m_value);
 
   std::string result = Calculator::subtract (left_side, getPrecision(), rhs);
-  return factory.create (return_type, result);
+  return factory::factory.create (return_type, result);
 }
 
 template<typename T>
@@ -62,7 +62,7 @@ IOperand *Operands<T>::operator* (const IOperand &rhs) const
   T left_side = Private::convert (m_value);
 
   std::string result = Calculator::multiply (left_side, getPrecision(), rhs);
-  return factory.create (return_type, result);
+  return factory::factory.create (return_type, result);
 }
 
 template<typename T>
@@ -72,7 +72,7 @@ IOperand *Operands<T>::operator/ (const IOperand &rhs) const
   T left_side = Private::convert (m_value);
 
   std::string result = Calculator::divide (left_side, getPrecision(), rhs);
-  return factory.create (return_type, result);
+  return factory::factory.create (return_type, result);
 }
 
 template<typename T>
@@ -82,7 +82,7 @@ IOperand *Operands<T>::operator% (const IOperand &rhs) const
   T left_side = Private::convert (m_value);
 
   std::string result = Calculator::mod (left_side, getPrecision(), rhs);
-  return factory.create (return_type, result);
+  return factory::factory.create (return_type, result);
 }
 
 /* Private Implementation */
