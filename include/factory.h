@@ -51,6 +51,8 @@ private:
         factory.insert(std::pair<eOperandType, FactoryFunction>(Double_t, &FactoryFunctions::createDouble));
     };
 
+    Factory(Factory const&);              //  copy constructor private
+
 public:
     static Factory& getInstance() noexcept
     {
@@ -58,8 +60,7 @@ public:
         return instance;
     };
 
-    Factory(Factory const&) = delete;              // Don't Implement
-    void operator=(Factory const&) = delete;
+    void operator=(Factory const&) = delete; // don't implement
 
     IOperand* create(eOperandType type, const std::string& value)
     {
