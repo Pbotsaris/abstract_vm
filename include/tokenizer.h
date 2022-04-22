@@ -1,16 +1,35 @@
-//
-// Created by Pedro Botsaris on 19/04/2022.
-//
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
+#include <regex>
+#include <iostream>
+#include <string>
+#include <array>
+#include <utility>
+#include "../include/doctest.h"
+#include "../include/exceptions.h"
 
-#ifndef _TOKENIZER_H_
-#define _TOKENIZER_H_
+namespace tokenizer
+{
+enum token_type {instr, value, integer, fpoint, sep, comment, EOP, err};
 
-
-
-class tokenizer {
-
+struct Token {
+  token_type type;
+  const std::string &value;
 };
 
+class Tokenizer {
+ private:
+  struct Private;
+  std::string m_text;
+  size_t m_textlen;
+  int m_cursor;
 
+ public:
+  Tokenizer (std::string &test);
 
-#endif //_TOKENIZER_H_
+  tokenizer::Token nextToken();
+
+};
+}
+
+#endif

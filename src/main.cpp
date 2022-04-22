@@ -1,5 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "../include/doctest.h"
+#include "../include/tokenizer.h"
 
 int main()
 {
