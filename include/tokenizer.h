@@ -10,11 +10,20 @@
 
 namespace tokenizer
 {
-enum token_type {instr, value, integer, fpoint, sep, comment, EOP, err};
-
+enum token_type {
+  /* INSTR */
+  push, pop, dump, assert, add, sub, mul, div, mod, print, exit,
+  /* TYPES */
+  int8, int16, int32,
+  /* SYNTAX */
+  space, sep, parenthesis, comment, end_of_program,
+  /* VALUES */
+  integers, floats,
+  };
+  
 struct Token {
   token_type type;
-  const std::string &value;
+  const std::string value;
 };
 
 class Tokenizer {
@@ -27,7 +36,8 @@ class Tokenizer {
  public:
   Tokenizer (std::string &test);
 
-  tokenizer::Token nextToken();
+  const tokenizer::Token nextToken();
+
 
 };
 }

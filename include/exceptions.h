@@ -10,17 +10,17 @@ namespace exceptions
   class EmptyStack : public std::exception
  {
     public:
-      static void throwE(bool valid);
-      static void print();
+      static void          throwE(bool valid);
+      static void          print();
       static ExceptionType getType();
   };
 
 class UnexpectedToken : public std::exception
 {
  public:
-  static void throwE();
-  static void print();
-  static ExceptionType getType();
+  [[noreturn]]  static void throwE();
+  static               void print();
+  static ExceptionType      getType();
 };
 }
 
