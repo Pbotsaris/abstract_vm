@@ -51,15 +51,17 @@ struct Factory {
     factory.insert (std::pair<eOperandType, FactoryFunction> (Double_t, &FactoryFunctions::createDouble));
   };
 
- public:
-  static Factory &getInstance () noexcept
-  {
-    static Factory instance = Factory ();
-    return instance;
-  };
+    Factory(Factory const&);              //  copy constructor private
 
-  Factory (Factory const &) = delete;              // Don't Implement
-  void operator= (Factory const &) = delete;
+public:
+    static Factory& getInstance() noexcept
+    {
+        static Factory instance = Factory();
+        return instance;
+    };
+
+    void operator=(Factory const&) = delete; // don't implement
+
 
   IOperand *create (eOperandType type, const std::string &value) noexcept
   {
