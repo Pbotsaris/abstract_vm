@@ -6,15 +6,22 @@
 
 namespace exceptions
 {
-  enum ExceptionType {empty_stack};
+  enum ExceptionType {empty_stack, unexpected_token};
   class EmptyStack : public std::exception
  {
     public:
-      static void throwE(bool valid);
-      static void tryCatch(bool valid);
-      static void print();
+      static void          throwE(bool valid);
+      static void          print();
       static ExceptionType getType();
   };
+
+class UnexpectedToken : public std::exception
+{
+ public:
+  [[noreturn]]  static void throwE();
+  static               void print();
+  static ExceptionType      getType();
+};
 }
 
 

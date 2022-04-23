@@ -27,9 +27,9 @@ const IOperand *Stack::pop ()
 TEST_CASE("Stack") // NOLINT(cert-err58-cpp)
 {
   Stack s = Stack ();
-  s.push (factory.create (Int8_t, "8"));
-  s.push (factory.create (Int32_t, "53"));
-  s.push (factory.create (Double_t, "2.202"));
+  s.push (factory::factory.create (Int8_t, "8"));
+  s.push (factory::factory.create (Int32_t, "53"));
+  s.push (factory::factory.create (Double_t, "2.202"));
 
   auto r = s.pop ();
   auto r2 = s.pop ();
