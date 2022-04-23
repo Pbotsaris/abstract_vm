@@ -76,7 +76,7 @@ namespace tokenizer
 
 /* Constructor */
 
-  Tokenizer::Tokenizer (std::string &text) : m_text (text), m_textlen (text.length ()), m_cursor (0)
+  Tokenizer::Tokenizer (const std::string &text) : m_text (text), m_textlen (text.length ()), m_cursor (0)
   {}
 
 
@@ -114,7 +114,7 @@ namespace tokenizer
 TEST_CASE("Tokenizer")
 {
 
-  using TestPair = std::pair<const tokenizer::token_type, std::string> ;
+  using TestPair = std::pair<const tokenizer::token_type, const std::string> ;
 
   SUBCASE("Single Keywords")
   {
@@ -186,8 +186,8 @@ TEST_CASE("Tokenizer")
 
   SUBCASE("Comments & EOP")
   {
-      std::string comment_with_eop = "; this is a comment with eop ;;";
-      std::string comment_followed_by_eop = "; this is a comment with eop\n;;";
+      const std::string comment_with_eop = "; this is a comment with eop ;;";
+      const std::string comment_followed_by_eop = "; this is a comment with eop\n;;";
 
       tokenizer::Tokenizer tokenizer = tokenizer::Tokenizer(comment_followed_by_eop);
       tokenizer::Token token = tokenizer.nextToken();
@@ -265,7 +265,7 @@ SUBCASE("multiple expression")
     TestPair eop_test    (tokenizer::end_of_program, ";;");
 
     std::array<TestPair, 11> tests {
-      push_test, int8_test, paren_open, floats_test, paren_close, sep1_test, /* first expression */
+      push_test, int8_test, paren_open, floats_test, paren_close, sep1_test,   /* first expression */
       div_test, sep2_test,                                                     /* second expression */
       exit_test, sep3_test,                                                    /* third expression */
       eop_test};                                                               /* fourth expression */
