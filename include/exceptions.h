@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <iostream>
+#include <string>
 
 namespace exceptions
 {
@@ -22,6 +23,19 @@ class UnexpectedToken : public std::exception
   static               void print();
   static ExceptionType      getType();
 };
+
+class UnexpectedEndOfInput : public std::exception
+{
+ private:
+     std::string m_type;
+
+ public:
+
+  [[noreturn]]  static void throwE();
+  static               void print();
+  static ExceptionType      getType();
+};
+
 }
 
 

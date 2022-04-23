@@ -32,3 +32,16 @@ exceptions::ExceptionType exceptions::UnexpectedToken::getType()
   return exceptions::unexpected_token;
 }
 
+void exceptions::UnexpectedEndOfInput::throwE()
+{
+    throw exceptions::UnexpectedEndOfInput();
+};
+
+
+void exceptions::UnexpectedEndOfInput::print()
+{
+  std::cout << "Unexpected end onf input" << "\n";
+}
+
+
+
