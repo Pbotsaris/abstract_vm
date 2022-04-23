@@ -51,7 +51,7 @@ namespace tokenizer
     FLOAT,
     DOUBLE,
     SPACE,
-   // SEP,
+   // SEP, -> handled in nextToken function
     COMMENT, 
     END_OF_PROGRAM,
     PARENTHESIS,
@@ -59,12 +59,17 @@ namespace tokenizer
     FLOATS
   };
 
-/* Private Implementation */
+/* Token constructors implementation */
+
+Token::Token(const token_type typ, const std::string &val) : type(typ), value(val) { }
+Token::Token(Token &&other) : type(other.type), value(other.value) { }
+
+/* Tokenizer Private Implementation */
 
  struct Tokenizer::Private
    {
     public:
-       static const Token handleLineBreak(Tokenizer &self)
+       static Token handleLineBreak(Tokenizer &self)
        {
           self.m_cursor++;
           return {tokenizer::sep, "\n"};
@@ -82,7 +87,7 @@ namespace tokenizer
 
 /* Public */
   
-  const Token Tokenizer::nextToken ()
+   Token Tokenizer::nextToken ()
   {
     const std::string substring = m_text.substr (m_cursor, m_textlen);
 
@@ -96,7 +101,7 @@ namespace tokenizer
       if (std::regex_search (substring, matched, regex.second))
       {
         m_cursor += matched[0].length ();
-        const Token token = {regex.first, matched[0]};
+        Token token = {regex.first, matched[0]};
   
         if (token.type == space)
           return nextToken();

@@ -43,8 +43,18 @@ namespace tokenizer
     };
     
   struct Token {
-    token_type           type;
-    const std::string    value;
+
+    Token(const token_type type, const std::string &value);
+    Token(Token &&other);
+
+    token_type     type;
+    std::string    value;
+
+    void move(Token &&other)
+    {
+       type = other.type;
+       value = other.value;
+   };
   };
   
   class Tokenizer {
@@ -57,7 +67,7 @@ namespace tokenizer
     public:
        Tokenizer (const std::string &test);
 
-       const tokenizer::Token nextToken();
+       tokenizer::Token nextToken();
   
   };
 }
