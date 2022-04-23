@@ -8,17 +8,38 @@
 #include "../include/doctest.h"
 #include "../include/exceptions.h"
 
+#define TOKENIZER_GRAMMAR_LENGTH 22
+
 namespace tokenizer
 {
 enum token_type {
   /* INSTR */
-  push, pop, dump, assert, add, sub, mul, div, mod, print, exit,
+  push,                  /* 00 */
+  pop,                   /* 01 */
+  dump,                  /* 02 */
+  assert,                /* 03 */
+  add,                   /* 04 */
+  sub,                   /* 05 */
+  mul,                   /* 06 */
+  div,                   /* 07 */
+  mod,                   /* 08 */
+  print,                 /* 09 */
+  exit,                  /* 10 */
   /* TYPES */
-  int8, int16, int32,
+  int8,                  /* 11 */
+  int16,                 /* 12 */
+  int32,                 /* 13 */
+  float_t             ,  /* 14 */
+  double_t,              /* 15 */
   /* SYNTAX */
-  space, sep, parenthesis, comment, end_of_program,
+  space,                 /* 16 */
+  sep,                   /* 17 */
+  parenthesis,           /* 18 */
+  comment,               /* 19 */
+  end_of_program,        /* 20 */
   /* VALUES */
-  integers, floats,
+  integers,              /* 21 */
+  floats,                /* 22 */
   };
   
 struct Token {
