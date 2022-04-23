@@ -15,20 +15,24 @@ void AST::newExpression() noexcept
   m_current++;
 };
 
-
-void AST::pushToken(tokenizer::Token &&token) noexcept
+void AST::pushToken(tokenizer::Token &token) noexcept
 {
-    m_body[m_current].push_back(token);
+   m_body[m_current].push_back(std::move(token));
 };
 
 const std::list<tokenizer::Token> &AST::getExpression(unsigned int position) const noexcept
 {
-    return m_body[position];
+    return m_body.at(position);
 };
 
 const ASTBody &AST::getBody()  const noexcept
 {
     return m_body;
+};
+
+bool AST::isExpressionEmpty() const noexcept
+{
+     return m_body[m_current].empty();
 };
 
 void AST::print()  const noexcept
@@ -57,10 +61,10 @@ TEST_CASE("AST")
   tokenizer::Token token2 = {tokenizer::int8, "int8"};
   auto ast = AST();
 
-  ast.pushToken(std::move(token));
-  ast.pushToken(std::move(token2));
+  ast.pushToken(token);
+  ast.pushToken(token2);
 
-  auto expression = ast.getExpression(0);
+   auto &expression = ast.getExpression(0);
 
   int i = 0;
 
@@ -75,25 +79,25 @@ TEST_CASE("AST")
     i++;
   };
 
-  ast.newExpression();
-
-  auto expression2 = ast.getExpression(1);
-
-  tokenizer::Token token3 = {tokenizer::assert, "assert"};
-  tokenizer::Token token4 = {tokenizer::double_t, "double"};
-
-  ast.pushToken(std::move(token3));
-  ast.pushToken(std::move(token4));
-
+   ast.newExpression();
+//
+   auto &expression2 = ast.getExpression(1);
+//
+    tokenizer::Token token3 = {tokenizer::assert, "assert"};
+    tokenizer::Token token4 = {tokenizer::double_t, "double"};
+//
+    ast.pushToken(token3);
+    ast.pushToken(token4);
+//
   int j= 0;
 
-  for(auto &token : expression)
+  for(auto &token : expression2)
   {
     if(j == 0)
-       CHECK(token.value == "push");
+       CHECK(token.value == "assert");
 
     if(j == 1)
-       CHECK(token.value == "int8");
+       CHECK(token.value == "double");
 
     j++;
   };

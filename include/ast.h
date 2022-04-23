@@ -20,9 +20,10 @@ namespace ast
        AST();
   
        void                                newExpression() noexcept;
-       void                                pushToken(tokenizer::Token &&token) noexcept;
-       const std::list<tokenizer::Token>  &getExpression(unsigned int position) const noexcept;
+       void                                pushToken(tokenizer::Token &token) noexcept;
        const ASTBody                      &getBody() const noexcept;
+       const std::list<tokenizer::Token>  &getExpression(unsigned int position) const noexcept;
+       bool                                isExpressionEmpty() const noexcept;
        void                                print() const noexcept;
   };
 };
