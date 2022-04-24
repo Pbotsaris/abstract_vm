@@ -8,6 +8,13 @@
 namespace exceptions
 {
   enum ExceptionType {empty_stack, unexpected_token};
+
+   class Exceptions : public std::exception {
+      static void          print();
+      static ExceptionType getType();
+ };
+
+
   class EmptyStack : public std::exception
  {
     public:
@@ -18,20 +25,20 @@ namespace exceptions
 
 class UnexpectedToken : public std::exception
 {
+
  public:
-  [[noreturn]]  static void throwE();
+  static std::string m_token;
+  [[noreturn]]  static void throwE(const std::string &token);
   static               void print();
   static ExceptionType      getType();
 };
 
 class UnexpectedEndOfInput : public std::exception
 {
- private:
-     std::string m_type;
-
  public:
+  static std::string m_token;
 
-  [[noreturn]]  static void throwE();
+  [[noreturn]]  static void throwE(const std::string &token);
   static               void print();
   static ExceptionType      getType();
 };
