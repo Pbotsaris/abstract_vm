@@ -48,7 +48,7 @@ TEST_CASE("Stack") // NOLINT(cert-err58-cpp)
         {
           s.pop();
         }
-      catch (exceptions::EmptyStack &err)
+      catch (exceptions::Exceptions &err)
         {
           CHECK(err.getType() == exceptions::empty_stack);
         }
@@ -57,6 +57,5 @@ TEST_CASE("Stack") // NOLINT(cert-err58-cpp)
   delete r;
   delete r2;
   delete r3;
-
 }
 

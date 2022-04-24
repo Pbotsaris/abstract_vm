@@ -24,13 +24,13 @@ namespace tokenizer
   RegexPair DOUBLE          (double_t, std::regex ("^double", icase));
   /* SYNTAX  */
   RegexPair SPACE           (space, std::regex ("^\\s+"));
- // RegexPair SEP             (sep, std::regex ("\n)"));
   RegexPair PARENTHESIS     (parenthesis, std::regex ("(^\\(|^\\))"));
   RegexPair COMMENT         (comment, std::regex ("^;[^;].*")); // matches until linebreak
   RegexPair END_OF_PROGRAM  (end_of_program, std::regex ("^;;"));
   /* NUMERIC */
   RegexPair INTEGERS        (integers, std::regex ("(?!.*\\.)^[-]?[0-9]+")); // will ignore if . is found in pattern
   RegexPair FLOATS          (floats, std::regex ("^[-]?[0-9]+\\.[0-9]+"));
+  /* IMPLEMENTATION  */
   
   const std::array<RegexPair, TOKENIZER_GRAMMAR_LENGTH> REGEXES = 
   { 
@@ -51,20 +51,25 @@ namespace tokenizer
     FLOAT,
     DOUBLE,
     SPACE,
-   // SEP,
+   // SEP, -> handled in nextToken function
     COMMENT, 
     END_OF_PROGRAM,
     PARENTHESIS,
     INTEGERS,
-    FLOATS
+    FLOATS,
   };
 
-/* Private Implementation */
+/* Token constructors implementation */
+
+Token::Token(const token_type typ, const std::string &val) : type(typ), value(val) { }
+//Token::Token(Token &&other) : type(other.type), value(other.value) { }
+
+/* Tokenizer Private Implementation */
 
  struct Tokenizer::Private
    {
     public:
-       static const Token handleLineBreak(Tokenizer &self)
+       static Token handleLineBreak(Tokenizer &self)
        {
           self.m_cursor++;
           return {tokenizer::sep, "\n"};
@@ -76,14 +81,17 @@ namespace tokenizer
 
 /* Constructor */
 
-  Tokenizer::Tokenizer (std::string &text) : m_text (text), m_textlen (text.length ()), m_cursor (0)
+  Tokenizer::Tokenizer (const std::string &text) : m_text (text), m_textlen (text.length ()), m_cursor (0)
   {}
 
 
 /* Public */
   
-  const Token Tokenizer::nextToken ()
+   Token Tokenizer::nextToken ()
   {
+   if(m_cursor == m_textlen)   
+      return Token(end_of_line, "");
+
     const std::string substring = m_text.substr (m_cursor, m_textlen);
 
     if(Private::isLineBreak(substring[0]))
@@ -96,7 +104,7 @@ namespace tokenizer
       if (std::regex_search (substring, matched, regex.second))
       {
         m_cursor += matched[0].length ();
-        const Token token = {regex.first, matched[0]};
+        Token token = Token(regex.first, matched[0]);
   
         if (token.type == space)
           return nextToken();
@@ -105,7 +113,7 @@ namespace tokenizer
       }
     }
 
-   exceptions::UnexpectedToken::throwE();
+   exceptions::UnexpectedToken::throwE(substring);
   }
 
 
@@ -114,7 +122,7 @@ namespace tokenizer
 TEST_CASE("Tokenizer")
 {
 
-  using TestPair = std::pair<const tokenizer::token_type, std::string> ;
+  using TestPair = std::pair<const tokenizer::token_type, const std::string> ;
 
   SUBCASE("Single Keywords")
   {
@@ -142,8 +150,9 @@ TEST_CASE("Tokenizer")
     TestPair floats1_test    ( tokenizer::floats, "-20.10");
     TestPair integers2_test  ( tokenizer::integers, "1000");
     TestPair floats2_test    ( tokenizer::floats, "2034.109");
+    TestPair eol_test        ( tokenizer::end_of_line, "");
 
-     std::array< TestPair, 25> instrs
+     std::array< TestPair, 26> instrs
      {
      push_test,
      push_test, 
@@ -170,6 +179,7 @@ TEST_CASE("Tokenizer")
      floats1_test,
      integers2_test,
      floats2_test,
+     eol_test,
      };
 
      for(auto &intr : instrs)
@@ -186,8 +196,8 @@ TEST_CASE("Tokenizer")
 
   SUBCASE("Comments & EOP")
   {
-      std::string comment_with_eop = "; this is a comment with eop ;;";
-      std::string comment_followed_by_eop = "; this is a comment with eop\n;;";
+      const std::string comment_with_eop = "; this is a comment with eop ;;";
+      const std::string comment_followed_by_eop = "; this is a comment with eop\n;;";
 
       tokenizer::Tokenizer tokenizer = tokenizer::Tokenizer(comment_followed_by_eop);
       tokenizer::Token token = tokenizer.nextToken();
@@ -265,7 +275,7 @@ SUBCASE("multiple expression")
     TestPair eop_test    (tokenizer::end_of_program, ";;");
 
     std::array<TestPair, 11> tests {
-      push_test, int8_test, paren_open, floats_test, paren_close, sep1_test, /* first expression */
+      push_test, int8_test, paren_open, floats_test, paren_close, sep1_test,   /* first expression */
       div_test, sep2_test,                                                     /* second expression */
       exit_test, sep3_test,                                                    /* third expression */
       eop_test};                                                               /* fourth expression */
@@ -281,6 +291,4 @@ SUBCASE("multiple expression")
        CHECK(token.value == test.second);
     }
   };
-
-
 };
