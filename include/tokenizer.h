@@ -40,20 +40,24 @@ namespace tokenizer
     /* VALUES */
     integers,              /* 21 */
     floats,                /* 22 */
+    /* IMPLEMENTATION */
+    end_of_line,           /* 23 */
     };
     
   struct Token {
 
     Token(const token_type type, const std::string &value);
-    Token(Token &&other);
+    Token(Token &&other) = default;
+
+    Token &operator=(Token &&other) = default;
 
     token_type     type;
     std::string    value;
 
     void move(Token &&other)
     {
+    value = other.value;
        type = other.type;
-       value = other.value;
    };
   };
   
@@ -62,7 +66,7 @@ namespace tokenizer
        struct            Private;
        const std::string m_text;
        size_t            m_textlen;
-       int               m_cursor;
+       size_t            m_cursor;
   
     public:
        Tokenizer (const std::string &test);

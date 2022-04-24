@@ -24,13 +24,13 @@ namespace tokenizer
   RegexPair DOUBLE          (double_t, std::regex ("^double", icase));
   /* SYNTAX  */
   RegexPair SPACE           (space, std::regex ("^\\s+"));
- // RegexPair SEP             (sep, std::regex ("\n)"));
   RegexPair PARENTHESIS     (parenthesis, std::regex ("(^\\(|^\\))"));
   RegexPair COMMENT         (comment, std::regex ("^;[^;].*")); // matches until linebreak
   RegexPair END_OF_PROGRAM  (end_of_program, std::regex ("^;;"));
   /* NUMERIC */
   RegexPair INTEGERS        (integers, std::regex ("(?!.*\\.)^[-]?[0-9]+")); // will ignore if . is found in pattern
   RegexPair FLOATS          (floats, std::regex ("^[-]?[0-9]+\\.[0-9]+"));
+  /* IMPLEMENTATION  */
   
   const std::array<RegexPair, TOKENIZER_GRAMMAR_LENGTH> REGEXES = 
   { 
@@ -56,13 +56,13 @@ namespace tokenizer
     END_OF_PROGRAM,
     PARENTHESIS,
     INTEGERS,
-    FLOATS
+    FLOATS,
   };
 
 /* Token constructors implementation */
 
 Token::Token(const token_type typ, const std::string &val) : type(typ), value(val) { }
-Token::Token(Token &&other) : type(other.type), value(other.value) { }
+//Token::Token(Token &&other) : type(other.type), value(other.value) { }
 
 /* Tokenizer Private Implementation */
 
@@ -89,6 +89,9 @@ Token::Token(Token &&other) : type(other.type), value(other.value) { }
   
    Token Tokenizer::nextToken ()
   {
+   if(m_cursor == m_textlen)   
+      return Token(end_of_line, "");
+
     const std::string substring = m_text.substr (m_cursor, m_textlen);
 
     if(Private::isLineBreak(substring[0]))
@@ -101,7 +104,7 @@ Token::Token(Token &&other) : type(other.type), value(other.value) { }
       if (std::regex_search (substring, matched, regex.second))
       {
         m_cursor += matched[0].length ();
-        Token token = {regex.first, matched[0]};
+        Token token = Token(regex.first, matched[0]);
   
         if (token.type == space)
           return nextToken();
@@ -110,7 +113,7 @@ Token::Token(Token &&other) : type(other.type), value(other.value) { }
       }
     }
 
-   exceptions::UnexpectedToken::throwE();
+   exceptions::UnexpectedToken::throwE(substring);
   }
 
 
@@ -147,8 +150,9 @@ TEST_CASE("Tokenizer")
     TestPair floats1_test    ( tokenizer::floats, "-20.10");
     TestPair integers2_test  ( tokenizer::integers, "1000");
     TestPair floats2_test    ( tokenizer::floats, "2034.109");
+    TestPair eol_test        ( tokenizer::end_of_line, "");
 
-     std::array< TestPair, 25> instrs
+     std::array< TestPair, 26> instrs
      {
      push_test,
      push_test, 
@@ -175,6 +179,7 @@ TEST_CASE("Tokenizer")
      floats1_test,
      integers2_test,
      floats2_test,
+     eol_test,
      };
 
      for(auto &intr : instrs)

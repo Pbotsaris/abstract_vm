@@ -20,7 +20,7 @@ void AST::pushToken(tokenizer::Token &token) noexcept
    m_body[m_current].push_back(std::move(token));
 };
 
-const std::list<tokenizer::Token> &AST::getExpression(unsigned int position) const noexcept
+const std::list<tokenizer::Token> &AST::getExpressionAt(unsigned int position) const noexcept
 {
     return m_body.at(position);
 };
@@ -64,7 +64,7 @@ TEST_CASE("AST")
   ast.pushToken(token);
   ast.pushToken(token2);
 
-   auto &expression = ast.getExpression(0);
+ const auto &expression = ast.getExpressionAt(0);
 
   int i = 0;
 
@@ -81,7 +81,7 @@ TEST_CASE("AST")
 
    ast.newExpression();
 //
-   auto &expression2 = ast.getExpression(1);
+   auto &expression2 = ast.getExpressionAt(1);
 //
     tokenizer::Token token3 = {tokenizer::assert, "assert"};
     tokenizer::Token token4 = {tokenizer::double_t, "double"};
