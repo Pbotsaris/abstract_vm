@@ -45,21 +45,14 @@ namespace tokenizer
     };
     
   struct Token {
+    token_type     type;
+    std::string    value;
 
     Token(const token_type type, const std::string &value);
     Token(Token &&other) = default;
 
     Token &operator=(Token &&other) = default;
-
-    token_type     type;
-    std::string    value;
-
-    void move(Token &&other)
-    {
-    value = other.value;
-       type = other.type;
-   };
-  };
+    };
   
   class Tokenizer {
     private:

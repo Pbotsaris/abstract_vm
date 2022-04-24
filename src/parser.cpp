@@ -184,7 +184,7 @@ TEST_CASE("Parser")
 
    CHECK(exp.back().type == tokenizer::pop);
    CHECK(exp2.back().type == tokenizer::div);
-  }
+}
 
   SUBCASE("Instruction Expression with comments")
   {
@@ -347,6 +347,20 @@ TEST_CASE("Parser")
     };
 
   } 
+
+  SUBCASE("Parse syntax error: UnexpectedToken")
+  {
+     try
+     {
+       std::string program = "bad_instruction int32(1000)\n;;";
+       auto tokenizer      = tokenizer::Tokenizer(program);
+       auto parser         = Parser(tokenizer);
+     }
+    catch(exceptions::Exceptions &err) 
+    {
+       CHECK(err.getType() == exceptions::unexpected_token);
+    }
+  };
 };
 
 

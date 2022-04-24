@@ -291,6 +291,4 @@ SUBCASE("multiple expression")
        CHECK(token.value == test.second);
     }
   };
-
-
 };

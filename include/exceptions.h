@@ -7,43 +7,44 @@
 
 namespace exceptions
 {
-  enum ExceptionType {empty_stack, unexpected_token};
+  enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input};
 
-   class Exceptions : public std::exception {
-      static void          print();
-      static ExceptionType getType();
+
+  class Exceptions : public std::exception {
+
+    public:
+      virtual void          print() = 0;
+      virtual ExceptionType getType() = 0;
  };
 
 
-  class EmptyStack : public std::exception
+  class EmptyStack : public  Exceptions
  {
     public:
       static void          throwE(bool valid);
-      static void          print();
-      static ExceptionType getType();
+      void                 print() override;
+      ExceptionType        getType() override;
   };
 
-class UnexpectedToken : public std::exception
-{
-
- public:
-  static std::string m_token;
-  [[noreturn]]  static void throwE(const std::string &token);
-  static               void print();
-  static ExceptionType      getType();
-};
-
-class UnexpectedEndOfInput : public std::exception
-{
- public:
-  static std::string m_token;
-
-  [[noreturn]]  static void throwE(const std::string &token);
-  static               void print();
-  static ExceptionType      getType();
-};
+  class UnexpectedToken : public Exceptions
+  {
+  
+   public:
+    static std::string m_token;
+    [[noreturn]]  static void throwE(const std::string &token);
+    void                      print() override;
+    ExceptionType             getType() override;
+  };
+  
+  class UnexpectedEndOfInput : public Exceptions
+  {
+   public:
+    static std::string m_token;
+  
+    [[noreturn]]  static void throwE(const std::string &token);
+    void                      print() override;
+    ExceptionType            getType() override;
+  };
 
 }
-
-
 #endif

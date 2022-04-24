@@ -42,11 +42,12 @@ void exceptions::UnexpectedEndOfInput::throwE(const std::string &token)
     throw exceptions::UnexpectedEndOfInput();
 };
 
-
 void exceptions::UnexpectedEndOfInput::print()
 {
   std::cout << "Unexpected end onf input: '" << m_token << "'\n";
 }
 
-
-
+exceptions::ExceptionType exceptions::UnexpectedEndOfInput::getType()
+{
+  return exceptions::unexpected_end_of_input;
+}
