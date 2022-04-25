@@ -6,7 +6,6 @@
 
 struct Calculator {
  public:
-
   template<typename T>
   static std::string sum (const T left, const int left_precision, const IOperand& rhs)
   {

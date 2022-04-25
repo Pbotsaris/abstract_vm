@@ -349,4 +349,43 @@ TEST_CASE("IOperands: Operations") // NOLINT(cert-err58-cpp)
       delete division;
       delete modulo;
     }
+
+   SUBCASE("overflow int8")
+  {
+    try
+    {
+       auto n1 = factory::factory.create(Int8_t, "300");
+       delete n1;
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
+
+ try
+    {
+       auto n1 = factory::factory.create(Int8_t, "-300");
+       delete n1;
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
+
+//    try
+//    {
+//       auto n1 = Operands<int8_t>(127);
+//       auto n2 = 
+//
+//
+//      
+//    } 
+//    catch(exceptions::Exceptions &err)
+//    {
+//      err.print();
+//      CHECK(err.getType() == exceptions::overflow);
+//    }
+//
+
+  }
 }

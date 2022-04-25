@@ -1,5 +1,8 @@
 #include "../include/exceptions.h"
 
+
+/* EMPTY STACK */
+
 void exceptions::EmptyStack::throwE (bool valid)
 {
   if(valid)
@@ -15,6 +18,8 @@ exceptions::ExceptionType exceptions::EmptyStack::getType()
 {
   return exceptions::empty_stack;
 }
+
+/* UNEXPECTED TOKEN */
 
 std::string exceptions::UnexpectedToken::m_token;
 
@@ -34,6 +39,8 @@ exceptions::ExceptionType exceptions::UnexpectedToken::getType()
   return exceptions::unexpected_token;
 }
 
+/* UNEXPECTED END OF INPUT */
+
 std::string exceptions::UnexpectedEndOfInput::m_token;
 
 void exceptions::UnexpectedEndOfInput::throwE(const std::string &token)
@@ -51,3 +58,62 @@ exceptions::ExceptionType exceptions::UnexpectedEndOfInput::getType()
 {
   return exceptions::unexpected_end_of_input;
 }
+
+/* OVERFLOW */
+
+std::string exceptions::Overflow::m_value;
+std::string exceptions::Overflow::m_type;
+
+template <>
+void exceptions::Overflow::throwE<int8_t>(const std::string &value)
+{
+    m_value = value;
+    m_type = std::string("int8");
+    throw exceptions::Overflow();
+};
+
+template <>
+void exceptions::Overflow::throwE<int16_t>(const std::string &value)
+{
+    m_value = value;
+    m_type = std::string("int16");
+    throw exceptions::Overflow();
+};
+
+
+template <>
+void exceptions::Overflow::throwE<int32_t>(const std::string &value)
+{
+    m_value = value;
+    m_type = std::string("int16");
+    throw exceptions::Overflow();
+};
+
+template <>
+void exceptions::Overflow::throwE<float>(const std::string &value)
+{
+    m_value = value;
+    m_type = std::string("float");
+    throw exceptions::Overflow();
+};
+
+template <>
+void exceptions::Overflow::throwE<double>(const std::string &value)
+{
+    m_value = value;
+    m_type = std::string("double");
+    throw exceptions::Overflow();
+};
+
+
+void exceptions::Overflow::print()
+{
+  std::cout << "The operation for value -> " << m_value << " overflows type '" << m_type << "'\n";
+}
+
+exceptions::ExceptionType exceptions::Overflow::getType()
+{
+  return exceptions::overflow;
+}
+
+
