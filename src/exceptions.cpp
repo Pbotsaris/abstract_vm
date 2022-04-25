@@ -85,7 +85,7 @@ template <>
 void exceptions::Overflow::throwE<int32_t>(const std::string &value)
 {
     m_value = value;
-    m_type = std::string("int16");
+    m_type = std::string("int32");
     throw exceptions::Overflow();
 };
 
@@ -108,7 +108,7 @@ void exceptions::Overflow::throwE<double>(const std::string &value)
 
 void exceptions::Overflow::print()
 {
-  std::cout << "The operation for value -> " << m_value << " overflows type '" << m_type << "'\n";
+  std::cout << "The value -> " << m_value << " overflows type '" << m_type << "'\n";
 }
 
 exceptions::ExceptionType exceptions::Overflow::getType()

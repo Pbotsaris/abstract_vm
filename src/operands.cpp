@@ -13,7 +13,9 @@ Operands<T>::Operands (T value)
 }
 
 template<typename T>
-Operands<T>::~Operands () = default;
+Operands<T>::~Operands () 
+{
+}
 
 /* Public Implementation */
 
@@ -354,38 +356,80 @@ TEST_CASE("IOperands: Operations") // NOLINT(cert-err58-cpp)
   {
     try
     {
-       auto n1 = factory::factory.create(Int8_t, "300");
-       delete n1;
+       factory::factory.create(Int8_t, "300");
     } 
     catch(exceptions::Exceptions &err)
     {
       CHECK(err.getType() == exceptions::overflow);
     }
 
- try
+   try
     {
-       auto n1 = factory::factory.create(Int8_t, "-300");
-       delete n1;
+       factory::factory.create(Int8_t, "-300");
     } 
     catch(exceptions::Exceptions &err)
     {
       CHECK(err.getType() == exceptions::overflow);
     }
 
-//    try
-//    {
-//       auto n1 = Operands<int8_t>(127);
-//       auto n2 = 
-//
-//
-//      
-//    } 
-//    catch(exceptions::Exceptions &err)
-//    {
-//      err.print();
-//      CHECK(err.getType() == exceptions::overflow);
-//    }
-//
+    auto n1 = factory::factory.create(Int8_t, "120");
+    auto n2 = factory::factory.create(Int8_t, "120");
+
+    try
+    {
+        (*n1) + (*n2); 
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+       CHECK(err.getType() == exceptions::overflow);
+    }
+
+      delete n1;
+      delete n2;
+
+  }
+
+ SUBCASE("overflow int16")
+  {
+    try
+    {
+       factory::factory.create(Int16_t, "40000");
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
+
+    try
+    {
+      factory::factory.create(Int16_t, "-4000");
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
+
+  }
+
+ SUBCASE("overflow int32")
+  {
+    try
+    {
+       factory::factory.create(Int32_t, "21474836479");
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
+
+    try
+    {
+       factory::factory.create(Int32_t, "-21474836479");
+    } 
+    catch(exceptions::Exceptions &err)
+    {
+      CHECK(err.getType() == exceptions::overflow);
+    }
 
   }
 }
