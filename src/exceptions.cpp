@@ -1,6 +1,5 @@
 #include "../include/exceptions.h"
 
-
 /* EMPTY STACK */
 
 void exceptions::EmptyStack::throwE (bool valid)
@@ -80,7 +79,6 @@ void exceptions::Overflow::throwE<int16_t>(const std::string &value)
     throw exceptions::Overflow();
 };
 
-
 template <>
 void exceptions::Overflow::throwE<int32_t>(const std::string &value)
 {
@@ -88,23 +86,6 @@ void exceptions::Overflow::throwE<int32_t>(const std::string &value)
     m_type = std::string("int32");
     throw exceptions::Overflow();
 };
-
-template <>
-void exceptions::Overflow::throwE<float>(const std::string &value)
-{
-    m_value = value;
-    m_type = std::string("float");
-    throw exceptions::Overflow();
-};
-
-template <>
-void exceptions::Overflow::throwE<double>(const std::string &value)
-{
-    m_value = value;
-    m_type = std::string("double");
-    throw exceptions::Overflow();
-};
-
 
 void exceptions::Overflow::print()
 {

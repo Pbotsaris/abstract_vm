@@ -7,6 +7,10 @@
 #define MAX_INT8 127
 #define MAX_INT16 32767
 
+
+namespace factory
+{
+
 typedef IOperand *(*FactoryFunction) (const std::string &value);
 
 struct FactoryFunctions {
@@ -86,8 +90,6 @@ private:
     
 };
 
-namespace factory
-{
     struct Factory {
     
      private:

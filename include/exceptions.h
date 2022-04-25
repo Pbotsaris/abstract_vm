@@ -8,7 +8,6 @@
 namespace exceptions
 {
   enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input, overflow};
-  enum operandType {Int8, Int16, Int32, Double, Float};
 
   class Exceptions : public std::exception {
 
