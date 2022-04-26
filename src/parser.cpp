@@ -156,16 +156,15 @@ struct Parser::Private
 
 /* CONSTRUCTOR */
 
-Parser::Parser(tokenizer::Tokenizer &tokenizer): m_tokenizer(tokenizer), m_lookahead(tokenizer.nextToken()), m_ast(ast::AST())
+Parser::Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast): m_tokenizer(tokenizer), m_lookahead(tokenizer.nextToken()), m_ast(ast)
 { };
 
 
 /* PUBLIC */
 
-const ast::AST &Parser::parse()
+ void Parser::parse()
 {
   Private::program(*this);
-  return m_ast;
 };
 
 /* TESTS */
@@ -176,9 +175,10 @@ TEST_CASE("Parser")
   {
    std::string program    = "pop\ndiv\n;;";
    auto tokenizer         = tokenizer::Tokenizer(program);
-   auto parser            = Parser(tokenizer);
+   auto ast               = ast::AST();
+   auto parser            = Parser(tokenizer, ast);
+   parser.parse();
 
-   const auto &ast        = parser.parse();
    const auto &exp        = ast.getExpressionAt(0);
    const auto &exp2       = ast.getExpressionAt(1);
 
@@ -190,9 +190,10 @@ TEST_CASE("Parser")
   {
    std::string program = "pop;this is a comment\n;more comments\ndiv";
    auto tokenizer      = tokenizer::Tokenizer(program);
-   auto parser         = Parser(tokenizer);
+   auto ast               = ast::AST();
+   auto parser            = Parser(tokenizer, ast);
+   parser.parse();
 
-   const auto &ast      = parser.parse();
    const auto &exp      = ast.getExpressionAt(0);
    const auto &exp2     = ast.getExpressionAt(1);
 
@@ -204,9 +205,12 @@ TEST_CASE("Parser")
  {
    std::string program = "assert int8(10)\npush int16(20)";
    auto tokenizer      = tokenizer::Tokenizer(program);
-   auto parser         = Parser(tokenizer);
+   auto ast               = ast::AST();
+   auto parser            = Parser(tokenizer, ast);
+   parser.parse();
 
-   const auto &ast      = parser.parse();
+
+
    const auto &exp      = ast.getExpressionAt(0);
    const auto &exp2     = ast.getExpressionAt(1);
 
@@ -245,9 +249,10 @@ TEST_CASE("Parser")
  {
    std::string program = "assert double(10.203)\npush float(20.43)";
    auto tokenizer      = tokenizer::Tokenizer(program);
-   auto parser         = Parser(tokenizer);
+   auto ast               = ast::AST();
+   auto parser            = Parser(tokenizer, ast);
+   parser.parse();
 
-   const auto &ast      = parser.parse();
    const auto &exp      = ast.getExpressionAt(0);
    const auto &exp2     = ast.getExpressionAt(1);
 
@@ -286,9 +291,11 @@ TEST_CASE("Parser")
   {
    std::string program = "push int32(1000)\n;;";
    auto tokenizer      = tokenizer::Tokenizer(program);
-   auto parser         = Parser(tokenizer);
+   auto ast               = ast::AST();
+   auto parser            = Parser(tokenizer, ast);
+   parser.parse();
+    
 
-   const auto &ast      = parser.parse();
    const auto &exp      = ast.getExpressionAt(0);
    const auto &exp2     = ast.getExpressionAt(1);
 
@@ -338,9 +345,11 @@ TEST_CASE("Parser")
     for(auto &instr : program)
     {
        auto tokenizer      = tokenizer::Tokenizer(instr.first);
-       auto parser         = Parser(tokenizer);
+       auto ast               = ast::AST();
+       auto parser            = Parser(tokenizer, ast);
 
-       const auto &ast      = parser.parse();
+       parser.parse();
+
        const auto &exp      = ast.getExpressionAt(0);
 
       CHECK(exp.back().type == instr.second);
@@ -354,7 +363,11 @@ TEST_CASE("Parser")
      {
        std::string program = "bad_instruction int32(1000)\n;;";
        auto tokenizer      = tokenizer::Tokenizer(program);
-       auto parser         = Parser(tokenizer);
+       auto ast               = ast::AST();
+       auto parser            = Parser(tokenizer, ast);
+
+       parser.parse();
+
      }
     catch(exceptions::Exceptions &err) 
     {
