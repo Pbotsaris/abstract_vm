@@ -4,13 +4,14 @@ using namespace tokenizer;
 using namespace ast;
 using namespace parser;
 using namespace stack;
-
+//using namespace evaluator;
 
 CLI::CLI() : 
     m_ast(AST()), 
     m_tokenizer(Tokenizer()),  
     m_parser(Parser(m_tokenizer, m_ast)), 
     m_stack(Stack())
+ //   m_evaluator(Evaluator())
 { };
 
 struct CLI::Private
@@ -33,8 +34,6 @@ void CLI::mainLoop()
   {
        m_tokenizer.load(line);
        m_parser.parse();
-       m_ast.print();
-       //m_ast.reset();
   } 
    catch(exceptions::Exceptions &err)
   {

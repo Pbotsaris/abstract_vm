@@ -7,7 +7,7 @@
 
 namespace exceptions
 {
-  enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input, overflow};
+  enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input, overflow, bad_assert, bad_print_type};
 
   class Exceptions : public std::exception {
 
@@ -57,6 +57,32 @@ namespace exceptions
     void                      print() override;
     ExceptionType            getType() override;
   };
+
+
+  class BadAssert : public Exceptions
+  {
+   public:
+    static std::string m_left;
+    static std::string m_right;
+  
+    [[noreturn]]  static void throwE(const std::string &left, const std::string &right);
+    
+    void                      print() override;
+    ExceptionType            getType() override;
+  };
+
+
+ class BadPrintType : public Exceptions
+  {
+   public:
+    static std::string m_type;
+  
+    [[noreturn]]  static void throwE(const std::string &type);
+    
+    void                      print() override;
+    ExceptionType            getType() override;
+  };
+
 
 }
 #endif

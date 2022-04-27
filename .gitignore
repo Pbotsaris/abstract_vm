@@ -1,4 +1,4 @@
 obj/*.o
 bin/*
-tests/obj/*.o
-tests/test
+tests
+.idea

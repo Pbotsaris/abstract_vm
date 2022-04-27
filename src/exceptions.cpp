@@ -97,4 +97,44 @@ exceptions::ExceptionType exceptions::Overflow::getType()
   return exceptions::overflow;
 }
 
+/* BAD ASSERT */
 
+std::string exceptions::BadAssert::m_left;
+std::string exceptions::BadAssert::m_right;
+
+void exceptions::BadAssert::throwE(const std::string &left, const std::string &right)
+{
+    m_left = left;
+    m_right = right;
+    throw exceptions::BadAssert();
+};
+
+void exceptions::BadAssert::print()
+{
+  std::cout << "Failed assert. Type or value  '" << m_left << "' does not match top of the stack value -> '" << m_right << "'\n";
+}
+
+exceptions::ExceptionType exceptions::BadAssert::getType()
+{
+  return exceptions::bad_assert;
+}
+
+/* BAD PRINT */
+
+std::string exceptions::BadPrintType::m_type;
+
+void exceptions::BadPrintType::throwE(const std::string &type)
+{
+    m_type = type;
+    throw exceptions::BadPrintType();
+};
+
+void exceptions::BadPrintType::print()
+{
+  std::cout << "Attempting to Print operand type -> '" << m_type << "'. Print is only available for type 'Int8'.\n";
+}
+
+exceptions::ExceptionType exceptions::BadPrintType::getType()
+{
+  return exceptions::bad_print_type;
+}

@@ -16,6 +16,9 @@ namespace stack
         ~Stack();
         void               push(const IOperand* operand);
         const IOperand*    pop();
+        const IOperand*    top();
+        bool               empty();
+    
     
     };
 
