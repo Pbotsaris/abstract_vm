@@ -1,21 +1,36 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "../include/doctest.h"
-#include "../include/tokenizer.h"
+#include "../include/program.h"
 
-int main()
+/* run tests with --test */
+int test()
 {
-  doctest::Context ctx;
+ doctest::Context ctx;
+ ctx.setOption("abort-after", 5);
+ ctx.setOption("no-breaks", true);
 
-  ctx.setOption("abort-after", 5);
-  ctx.setOption("no-breaks", true);
+ int res = ctx.run();
 
-  int res = ctx.run();
+ if(ctx.shouldExit())
+     return res;
 
-  if(ctx.shouldExit())
-      return res;
-
-  return res;
+  return -1;
 }
+int main(int ac, char **av)
 
+{
+   Program program(ac, av);
+
+   if(program.runTest())
+   {
+      int res = test();
+      if(res > 0)
+         return res;
+  }
+
+  program.run();
+      
+  return 0;
+}
 
 
