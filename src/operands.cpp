@@ -13,9 +13,7 @@ Operands<T>::Operands (T value)
 }
 
 template<typename T>
-Operands<T>::~Operands () 
-{
-}
+Operands<T>::~Operands () = default;
 
 /* Public Implementation */
 

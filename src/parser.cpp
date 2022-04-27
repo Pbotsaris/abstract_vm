@@ -10,6 +10,9 @@ struct Parser::Private
 
     static void program(Parser &self)
     {
+
+      self.m_ast.newExpression();
+
          while(notEndOfLine(self))
         {
           expression(self);
@@ -164,6 +167,9 @@ Parser::Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast): m_tokenizer(toke
 
  void Parser::parse()
 {
+  if(m_lookahead.type == tokenizer::end_of_line)
+      m_lookahead = m_tokenizer.nextToken();
+
   Private::program(*this);
 };
 

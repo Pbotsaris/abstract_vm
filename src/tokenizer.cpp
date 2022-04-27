@@ -62,7 +62,6 @@ namespace tokenizer
 /* Token constructors implementation */
 
 Token::Token(const token_type typ, const std::string &val) : type(typ), value(val) { }
-//Token::Token(Token &&other) : type(other.type), value(other.value) { }
 
 /* Tokenizer Private Implementation */
 
@@ -81,11 +80,25 @@ Token::Token(const token_type typ, const std::string &val) : type(typ), value(va
 
 /* Constructor */
 
+  Tokenizer::Tokenizer () : m_text (""), m_textlen (0), m_cursor (0) {}
+
   Tokenizer::Tokenizer (const std::string &text) : m_text (text), m_textlen (text.length ()), m_cursor (0)
   {}
 
-
 /* Public */
+
+   void Tokenizer::load(const std::string &text)
+   { 
+        m_text = text;
+        m_textlen = text.length();
+        m_cursor = 0;
+   }
+
+     void Tokenizer::printText()
+   { 
+       std::cout << m_text << "\n";
+   }
+
   
    Token Tokenizer::nextToken ()
   {
