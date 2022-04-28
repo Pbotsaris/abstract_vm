@@ -15,7 +15,7 @@ namespace evaluator
           struct Private;
     
     public:
-    
+
          Evaluator() = default;
          ~Evaluator() = default;
        
@@ -35,7 +35,6 @@ namespace evaluator
         void mod();
         
         void print();
-        void exit();
     };
 
 }

@@ -28,15 +28,10 @@ const ASTBody &AST::getBody()  const noexcept
 
 void AST::reset() noexcept
 {
-    for(unsigned int i = 0; i <= m_current; i++)
-  {
-      auto &list = m_body[i];
+  m_body.erase(m_body.begin(), m_body.end());
+  
+  m_current = -1;
 
-      while(!list.empty())
-         list.pop_back();
-  }
-
-  m_current = 0;
 };
 
 bool AST::isExpressionEmpty() const noexcept
@@ -62,6 +57,17 @@ void AST::print()  const noexcept
 
    };
 };
+
+const tokenizer::Token &AST::lastToken() const noexcept
+{
+    return m_body[m_current].back();
+};
+
+bool AST::empty() const noexcept
+{
+  return m_current < 0 ;
+}
+
 
 TEST_CASE("AST")
 {

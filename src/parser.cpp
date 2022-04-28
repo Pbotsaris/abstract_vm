@@ -159,7 +159,9 @@ struct Parser::Private
 
 /* CONSTRUCTOR */
 
-Parser::Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast): m_tokenizer(tokenizer), m_lookahead(tokenizer.nextToken()), m_ast(ast)
+Parser::Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast):
+m_tokenizer(tokenizer),
+m_lookahead(tokenizer::Token(tokenizer::end_of_line, "")), m_ast(ast)
 { };
 
 
@@ -167,8 +169,10 @@ Parser::Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast): m_tokenizer(toke
 
  void Parser::parse()
 {
+  m_lookahead = m_tokenizer.nextToken();
+
   if(m_lookahead.type == tokenizer::end_of_line)
-      m_lookahead = m_tokenizer.nextToken();
+     return;
 
   Private::program(*this);
 };

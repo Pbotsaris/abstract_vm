@@ -13,7 +13,7 @@ namespace ast
   {
       private:
         ASTBody m_body;
-        unsigned int m_current;
+        int m_current;
   
     public:
   
@@ -26,6 +26,8 @@ namespace ast
        bool                                isExpressionEmpty() const noexcept;
        void                                reset() noexcept;
        void                                print() const noexcept;
+       const tokenizer::Token             &lastToken()const noexcept;
+       bool                                empty() const noexcept;
   };
 };
 

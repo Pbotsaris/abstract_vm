@@ -107,7 +107,6 @@ void Evaluator::pop()
    delete operand;
 };
 
-
 void Evaluator::dump()
 {
     std::list<const IOperand*> temp;
@@ -125,7 +124,6 @@ void Evaluator::dump()
       m_stack.push(std::move(operand));
       temp.pop_back();
    };
-
 };
 
 void Evaluator::add()
@@ -195,11 +193,6 @@ void Evaluator::print()
     std::cout << c << "\n";
     
     m_stack.push(operand);
-};
-
-void Evaluator::exit()
-{
-    // implement
 };
 
 

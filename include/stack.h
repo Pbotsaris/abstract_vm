@@ -13,6 +13,7 @@ namespace stack
         std::stack<const IOperand*> m_stack;
     
       public:
+         Stack() = default;
         ~Stack();
         void               push(const IOperand* operand);
         const IOperand*    pop();
