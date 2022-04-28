@@ -5,19 +5,24 @@
 
 #include <stack>
 
-class Stack
+namespace stack
 {
-  private:
-    std::stack<const IOperand*> m_stack;
+    class Stack
+    {
+      private:
+        std::stack<const IOperand*> m_stack;
+    
+      public:
+         Stack() = default;
+        ~Stack();
+        void               push(const IOperand* operand);
+        const IOperand*    pop();
+        const IOperand*    top();
+        bool               empty();
+    
+    
+    };
 
-  public:
-    ~Stack();
-    void               push(const IOperand* operand);
-    const IOperand*    pop();
-
-};
-
-
-
+}
 
 #endif

@@ -11,12 +11,12 @@ namespace parser
            struct               Private;
            tokenizer::Tokenizer &m_tokenizer;
            tokenizer::Token     m_lookahead;
-           ast::AST             m_ast;
+           ast::AST             &m_ast;
   
         public:
-           Parser(tokenizer::Tokenizer &tokenizer);
+           Parser(tokenizer::Tokenizer &tokenizer, ast::AST &ast);
          
-          const ast::AST &parse();
+          void parse();
     };
 }
 

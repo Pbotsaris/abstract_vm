@@ -2,11 +2,7 @@
 
 using namespace ast;
 
-AST::AST() : m_current(0)
-{
-  std::list<tokenizer::Token> expression {};
-  m_body.push_back(std::move(expression));
-}
+AST::AST() : m_current(-1) { }
 
 void AST::newExpression() noexcept
 {
@@ -28,6 +24,14 @@ const std::list<tokenizer::Token> &AST::getExpressionAt(unsigned int position) c
 const ASTBody &AST::getBody()  const noexcept
 {
     return m_body;
+};
+
+void AST::reset() noexcept
+{
+  m_body.erase(m_body.begin(), m_body.end());
+  
+  m_current = -1;
+
 };
 
 bool AST::isExpressionEmpty() const noexcept
@@ -54,12 +58,24 @@ void AST::print()  const noexcept
    };
 };
 
+const tokenizer::Token &AST::lastToken() const noexcept
+{
+    return m_body[m_current].back();
+};
+
+bool AST::empty() const noexcept
+{
+  return m_current < 0 ;
+}
+
+
 TEST_CASE("AST")
 {
-
   tokenizer::Token token = {tokenizer::push, "push"};
   tokenizer::Token token2 = {tokenizer::int8, "int8"};
   auto ast = AST();
+
+  ast.newExpression();
 
   ast.pushToken(token);
   ast.pushToken(token2);
@@ -79,16 +95,13 @@ TEST_CASE("AST")
     i++;
   };
 
-   ast.newExpression();
-//
-   auto &expression2 = ast.getExpressionAt(1);
-//
+    ast.newExpression();
+    auto &expression2 = ast.getExpressionAt(1);
     tokenizer::Token token3 = {tokenizer::assert, "assert"};
     tokenizer::Token token4 = {tokenizer::double_t, "double"};
-//
     ast.pushToken(token3);
     ast.pushToken(token4);
-//
+
   int j= 0;
 
   for(auto &token : expression2)

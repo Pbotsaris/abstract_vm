@@ -18,7 +18,10 @@ OBJS=$(patsubst $(SRC)/%.cpp, $(OBJ)/%.o, $(SRCS))
 all: $(TARGET)
 
 run: ${TARGET}
-	./${TARGET}
+	./${TARGET} 
+
+test: ${TARGET}
+	./${TARGET} --test
 
 $(TARGET): $(OBJS)
 	$(CC) -o $(TARGET) $(OBJS) $(CFLAGS) $(CPP_FLAGS)

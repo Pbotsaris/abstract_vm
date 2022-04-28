@@ -1,5 +1,7 @@
 #include "../include/stack.h"
 
+using namespace stack;
+
 Stack::~Stack ()
 {
   while (!m_stack.empty ())
@@ -9,8 +11,8 @@ Stack::~Stack ()
       delete operand;
     }
 }
-
 void Stack::push (const IOperand *operand)
+
 {
   m_stack.push (operand);
 };
@@ -22,6 +24,17 @@ const IOperand *Stack::pop ()
   const IOperand *top = m_stack.top ();
   m_stack.pop ();
   return top;
+};
+
+const IOperand *Stack::top ()
+{
+  exceptions::EmptyStack::throwE (m_stack.empty ());
+  return m_stack.top ();
+};
+
+bool Stack::empty()
+{
+    return m_stack.empty();
 };
 
 TEST_CASE("Stack") // NOLINT(cert-err58-cpp)

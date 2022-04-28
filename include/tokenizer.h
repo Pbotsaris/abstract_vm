@@ -57,14 +57,18 @@ namespace tokenizer
   class Tokenizer {
     private:
        struct            Private;
-       const std::string m_text;
+       std::string       m_text;
        size_t            m_textlen;
        size_t            m_cursor;
   
     public:
-       Tokenizer (const std::string &test);
+       
+       Tokenizer ();
+       Tokenizer (const std::string &text);
 
-       tokenizer::Token nextToken();
+       void load(const std::string &text);
+       void printText();
+       Token nextToken();
   
   };
 }
