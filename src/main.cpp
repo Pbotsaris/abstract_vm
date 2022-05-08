@@ -27,8 +27,8 @@ int main(int ac, char **av)
       if(res > 0)
          return res;
   }
-
-  program.run();
+  else
+    program.run();
       
   return 0;
 }

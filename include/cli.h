@@ -15,18 +15,21 @@ class CLI
     stack::Stack         m_stack;
     evaluator::Evaluator m_eval;
     bool                 m_exit;
-  
     struct               Private;
+
+    /* members used for unit test only */
+    bool                 m_test;
+    std::istringstream   m_test_line;
 
   public:
     CLI();
+
+    /* constructor used for unit test only */
+    CLI(const char *line);
    ~CLI() = default;
 
    void mainLoop();
 
 };
-
-
-
 
 #endif

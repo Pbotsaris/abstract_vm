@@ -111,7 +111,7 @@ void exceptions::BadAssert::throwE(const std::string &left, const std::string &r
 
 void exceptions::BadAssert::print()
 {
-  std::cout << "Failed assert. Type or value  '" << m_left << "' does not match top of the stack value -> '" << m_right << "'\n";
+  std::cout << "Failed assert. Type or value '" << m_left << "' does not match top of the stack -> '" << m_right << "'\n";
 }
 
 exceptions::ExceptionType exceptions::BadAssert::getType()

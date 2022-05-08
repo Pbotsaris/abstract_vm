@@ -20,6 +20,7 @@ namespace ast
        AST();
   
        void                                newExpression() noexcept;
+       void                                deleteCurrentExpression() noexcept;
        void                                pushToken(tokenizer::Token &token) noexcept;
        const ASTBody                      &getBody() const noexcept;
        const std::list<tokenizer::Token>  &getExpressionAt(unsigned int position) const noexcept;

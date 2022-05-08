@@ -11,6 +11,16 @@ void AST::newExpression() noexcept
   m_current++;
 };
 
+void AST::deleteCurrentExpression() noexcept
+{
+  if(m_current >= 0)
+  {
+     m_body.pop_back();
+     m_current--;
+  }
+};
+
+
 void AST::pushToken(tokenizer::Token &token) noexcept
 {
    m_body[m_current].push_back(std::move(token));
