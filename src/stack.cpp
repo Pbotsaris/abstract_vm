@@ -2,34 +2,34 @@
 
 using namespace stack;
 
-Stack::~Stack ()
+Stack::~Stack()
 {
-  while (!m_stack.empty ())
+  while (!m_stack.empty())
     {
-      const IOperand *operand = m_stack.top ();
-      m_stack.pop ();
+      const IOperand *operand = m_stack.top();
+      m_stack.pop();
       delete operand;
     }
 }
-void Stack::push (const IOperand *operand)
+void Stack::push(const IOperand *operand)
 
 {
-  m_stack.push (operand);
+  m_stack.push(operand);
 };
 
-const IOperand *Stack::pop ()
+const IOperand *Stack::pop()
 {
-  exceptions::EmptyStack::throwE (m_stack.empty ());
+  exceptions::EmptyStack::throwE (m_stack.empty());
 
-  const IOperand *top = m_stack.top ();
-  m_stack.pop ();
+  const IOperand *top = m_stack.top();
+  m_stack.pop();
   return top;
 };
 
-const IOperand *Stack::top ()
+const IOperand *Stack::top()
 {
-  exceptions::EmptyStack::throwE (m_stack.empty ());
-  return m_stack.top ();
+  exceptions::EmptyStack::throwE (m_stack.empty());
+  return m_stack.top();
 };
 
 bool Stack::empty()

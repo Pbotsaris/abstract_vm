@@ -77,6 +77,11 @@ struct CLI::Private
     {
      return !self.m_ast.empty() && self.m_ast.lastToken().type == tokenizer::end_of_program;
     };
+
+    static bool resetAST(exceptions::Exceptions &err)
+    {
+     return err.getType() == exceptions::overflow || err.getType() == exceptions::empty_stack;
+    }
 };
 
 void CLI::mainLoop()
@@ -103,7 +108,7 @@ void CLI::mainLoop()
   {
        err.print();
 
-       if(err.getType() == exceptions::overflow)
+       if(Private::resetAST(err))
           m_ast.reset();
   }
 

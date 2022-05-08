@@ -10,7 +10,7 @@ void exceptions::EmptyStack::throwE (bool valid)
 
 void exceptions::EmptyStack::print()
 {
-    std::cout << "The stack composed of less than two values when an arithmetic instruction was executed" << "\n";
+    std::cout << "The stack is empty. The operation was not completed." << "\n";
 }
 
 exceptions::ExceptionType exceptions::EmptyStack::getType()

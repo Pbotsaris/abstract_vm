@@ -53,12 +53,22 @@ struct Evaluator::Private
 
     static void performOperation(Evaluator &self, const IOperand *(*lambda)(const IOperand *lhs, const IOperand *rhs))
     {
-      auto *rhs = self.m_stack.pop();
-      auto *lhs = self.m_stack.pop();
+      const IOperand *rhs = self.m_stack.pop();;
+      const IOperand *lhs;
+
+     try
+      {
+          lhs = self.m_stack.pop();
+      }
+      catch(exceptions::Exceptions &err)
+      {
+          self.m_stack.push(rhs);
+          throw;
+      }
   
       try
       {
-         auto *res =  lambda(lhs, rhs);
+         auto *res = lambda(lhs, rhs);
          self.m_stack.push(res);
       }
       catch(exceptions::Exceptions &err)
