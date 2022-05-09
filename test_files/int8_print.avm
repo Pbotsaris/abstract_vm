@@ -1,3 +1,4 @@
+; this is an int8 stravaganza!
 push int8(2)
 push int8(35)
 push int8(2)
@@ -20,5 +21,27 @@ push int8(2)
 div
 push int8(4)
 add
+print
+push int8(32)
+print
+push int8(33) ; what end with a N
+push int8(78)
+push int8(65)
+push int8(84)
+push int8(69)
+push int8(65)
+push int8(71) ; and starts with a G?
+print
+pop
+print
+pop
+print
+pop
+print
+pop
+print
+pop
+print
+pop
 print
 ;;

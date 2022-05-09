@@ -119,7 +119,7 @@ Token::Token(const token_type typ, const std::string &val) : type(typ), value(va
         m_cursor += matched[0].length ();
         Token token = Token(regex.first, matched[0]);
   
-        if (token.type == space)
+        if (token.type == space || token.type == comment)
           return nextToken();
   
         return token;

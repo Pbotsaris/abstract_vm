@@ -29,7 +29,12 @@ struct Parser::Private
         exceptions::UnexpectedEndOfInput::throwE(self.m_lookahead.value);
              
       tokenizer::Token token = std::move(self.m_lookahead);
-      self.m_lookahead =  ignoreComments(self);
+
+      if(type == tokenizer::comment)
+         self.m_lookahead = self.m_tokenizer.nextToken();
+
+      else
+        self.m_lookahead =  ignoreComments(self);
 
       return token;
     }
@@ -39,6 +44,7 @@ struct Parser::Private
      {
         while(notEndOfExpression(self))
         {
+
             tokenizer::Token token = instruction(self);
             self.m_ast.pushToken(token);
         }
@@ -93,6 +99,11 @@ struct Parser::Private
              exceptions::UnexpectedEndOfInput::throwE(self.m_lookahead.value);
          }
       
+    };
+
+    static void comment(Parser &self)
+    {
+      auto token = eat(self, tokenizer::comment);
     };
 
      static tokenizer::Token push(Parser &self)
