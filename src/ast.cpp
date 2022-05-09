@@ -20,7 +20,6 @@ void AST::deleteCurrentExpression() noexcept
   }
 };
 
-
 void AST::pushToken(tokenizer::Token &token) noexcept
 {
    m_body[m_current].push_back(std::move(token));
@@ -125,6 +124,3 @@ TEST_CASE("AST")
     j++;
   };
 };
-
-
-

@@ -3,13 +3,11 @@
 struct Program::Private
 {
     static bool hasPath(Program &self) {return self.m_path.length() != 0; };
-
-   };
+};
 
 Program::Program(int ac, char **av)
 : m_test(false), m_path("")
 { 
-
    for(int i = 1; i < ac; i++)
     {
 
@@ -26,8 +24,10 @@ Program::Program(int ac, char **av)
 
 int Program::run()
 {
-    if(!Private::hasPath(*this))
-          m_cli.mainLoop();
+    if(Private::hasPath(*this))
+        m_cli.loadTextFromFile(m_path);
+
+    m_cli.mainLoop();
 
     return 0;
 };

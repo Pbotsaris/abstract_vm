@@ -2,6 +2,8 @@
 #define PROGRAM_H
 #include <tuple>
 #include <string>
+#include <fstream>
+
 #include "../include/cli.h"
 
 #define TEST_ARGUMENT "--test"
@@ -18,9 +20,10 @@ class Program
     
   public:
      Program(int ac, char **av);
-
+     
      int run();
      bool runTest();
+     
 };
 
 #endif

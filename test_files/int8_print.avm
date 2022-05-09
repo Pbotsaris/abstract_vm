@@ -1,0 +1,24 @@
+push int8(2)
+push int8(35)
+push int8(2)
+mul
+add
+print
+push int8(69)
+print
+pop
+pop
+push int8(76)
+print
+print
+push int8(3)
+add
+print
+push int8(1)
+add
+push int8(2)
+div
+push int8(4)
+add
+print
+;;

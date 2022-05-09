@@ -1,0 +1,5 @@
+push int8(10)
+push int8(20)
+add
+dump
+;;

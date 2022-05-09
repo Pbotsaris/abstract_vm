@@ -1,6 +1,7 @@
 #ifndef CLI_H
 #define CLI_H
 
+#include <fstream>
 #include "../src/operands.cpp"
 #include "evaluator.h"
 #include "stack.h"
@@ -15,19 +16,25 @@ class CLI
     stack::Stack         m_stack;
     evaluator::Evaluator m_eval;
     bool                 m_exit;
-    struct               Private;
+    bool                 m_istest;
+    bool                 m_isfromfile;
 
-    /* members used for unit test only */
-    bool                 m_test;
-    std::istringstream   m_test_line;
+    
+    std::ifstream        m_filetext;
+    /* for unit testing */
+    std::istringstream   m_test_text;
+
+    struct               Private;
 
   public:
     CLI();
 
-    /* constructor used for unit test only */
-    CLI(const char *line);
+    /* for file read & unit test */
+    CLI(const char *text);
+    CLI(const std::string &path);
    ~CLI() = default;
 
+   void loadTextFromFile(const std::string &path);
    void mainLoop();
 
 };

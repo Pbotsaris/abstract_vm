@@ -4,21 +4,22 @@ using namespace tokenizer;
 using namespace ast;
 using namespace parser;
 using namespace stack;
-//using namespace evaluator;
 
 CLI::CLI() : 
     m_parser(Parser(m_tokenizer, m_ast)),
     m_exit(false),
-    m_test(false),
-    m_test_line("")
+    m_istest(false),
+    m_isfromfile(false),
+    m_test_text("")
 { };
 
-/* this constructor is used for unit test only */
-CLI::CLI(const char *line) : 
+/*  unit tests */
+CLI::CLI(const char *text) : 
     m_parser(Parser(m_tokenizer, m_ast)),
     m_exit(false),
-    m_test(true),
-    m_test_line(line)
+    m_istest(true),
+    m_isfromfile(false),
+    m_test_text(text)
 { };
 
 struct CLI::Private
@@ -103,18 +104,32 @@ struct CLI::Private
     {
      return err.getType() == exceptions::unexpected_token || err.getType() == exceptions::unexpected_end_of_input;
     }
+
+    static bool isEOF(CLI &self, std::string &line)
+    {
+      return self.m_isfromfile && line == "";
+    };
+};
+
+void CLI::loadTextFromFile(const std::string &path)
+{
+    m_isfromfile = true;
+    m_filetext = std::ifstream(path);
 };
 
 void CLI::mainLoop()
 {
-  if(!m_test)
+  if(!m_istest && !m_isfromfile)
     Private::printGreeting();
 
   while(!m_exit)
   {
-
   std::string line;
-  std::getline(m_test ? m_test_line : std::cin, line); /* use test line instead of cin for unit tests */
+
+  if(!m_istest)
+      std::getline(m_isfromfile ? m_filetext : std::cin, line); 
+  else
+      std::getline(m_test_text, line); 
 
   try
   {
@@ -138,7 +153,7 @@ void CLI::mainLoop()
           m_ast.reset();
   }
 
-  if(line == "exit")
+  if(line == "exit" || Private::isEOF(*this, line))
        m_exit = true;
 
   };
