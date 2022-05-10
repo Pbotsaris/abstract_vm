@@ -31,7 +31,7 @@ public:
   {
      auto val = std::stoi (value);
 
-     if(val > MAX_INT16 || val < (MAX_INT8 * -1)) 
+     if(val > MAX_INT16 || val < (MAX_INT16 * -1)) 
           exceptions::Overflow::throwE<int16_t>(value);
 
     return new Operands<int16_t> (static_cast<int16_t>(val));
