@@ -3,7 +3,7 @@ OBJ=obj
 BIN=bin
 
 TEST_OBJ=tests/obj
-CFLAGS += -Wall -Wextra -g3 -Iinclude -fsanitize=address 
+CFLAGS += -Wall -Wextra -g3 -Iinclude 
 CPP_FLAGS = -Wpedantic -std=c++17 -Wcast-qual -Wnon-virtual-dtor -Woverloaded-virtual -Wold-style-cast
 
 CC=clang++

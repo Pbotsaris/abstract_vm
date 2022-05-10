@@ -209,22 +209,21 @@ TEST_CASE("Tokenizer")
 
   SUBCASE("Comments & EOP")
   {
-      const std::string comment_with_eop = "; this is a comment with eop ;;";
       const std::string comment_followed_by_eop = "; this is a comment with eop\n;;";
+      const std::string comment_with_eop = "; this is a comment with eop ;;\n";
 
       tokenizer::Tokenizer tokenizer = tokenizer::Tokenizer(comment_followed_by_eop);
+     
+    /* ignores comments  */
       tokenizer::Token token = tokenizer.nextToken();
-      CHECK(token.type == tokenizer::comment);
+      CHECK(token.type == tokenizer::sep);
 
-      tokenizer::Token token2 = tokenizer.nextToken();
-      CHECK(token2.type == tokenizer::sep);
+     tokenizer::Token token2 = tokenizer.nextToken();
+     CHECK(token2.type == tokenizer::end_of_program);
 
-      tokenizer::Token token4 = tokenizer.nextToken();
-      CHECK(token4.type == tokenizer::end_of_program);
-
-      tokenizer::Tokenizer tokenizer2 = tokenizer::Tokenizer(comment_with_eop);
-      tokenizer::Token token3 = tokenizer2.nextToken();
-      CHECK(token3.type == tokenizer::comment);
+     tokenizer::Tokenizer tokenizer2 = tokenizer::Tokenizer(comment_with_eop);
+     tokenizer::Token token3 = tokenizer2.nextToken();
+     CHECK(token3.type == tokenizer::sep);
   };
 
 
@@ -257,10 +256,10 @@ SUBCASE("expression followed by comment")
     TestPair paren_open (tokenizer::parenthesis, "(");
     TestPair integers_test (tokenizer::integers, "10");
     TestPair paren_close (tokenizer::parenthesis, ")");
-    TestPair comment_test (tokenizer::comment, "; a comment here");
 
-    std::array<TestPair, 6> tests { push_test, int8_test, paren_open, integers_test, paren_close, comment_test };
+    std::array<TestPair, 5> tests { push_test, int8_test, paren_open, integers_test, paren_close };
 
+    /* comments wil lbe ignored and not produce a  token */
     std::string expression = "push int8(10) ; a comment here";
     
     tokenizer::Tokenizer tokenizer = tokenizer::Tokenizer(expression);

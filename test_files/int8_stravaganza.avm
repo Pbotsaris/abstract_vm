@@ -24,8 +24,8 @@ add
 print
 push int8(32)
 print
-push int8(33) ; what end with a N
-push int8(78)
+push int8(33) 
+push int8(78) ; what end with a N
 push int8(65)
 push int8(84)
 push int8(69)

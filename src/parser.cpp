@@ -10,7 +10,6 @@ struct Parser::Private
 
     static void program(Parser &self)
     {
-
       self.m_ast.newExpression();
 
          while(notEndOfLine(self))
@@ -42,9 +41,9 @@ struct Parser::Private
   private:
      static void expression(Parser &self)
      {
+             
         while(notEndOfExpression(self))
         {
-
             tokenizer::Token token = instruction(self);
             self.m_ast.pushToken(token);
         }
@@ -158,6 +157,12 @@ struct Parser::Private
       else
         return token;
     };
+
+    static void blankLine(Parser &self)
+    {
+        eat(self, tokenizer::sep);
+        program(self);
+    }
 
    static bool notEndOfLine(Parser &self){ return self.m_lookahead.type != tokenizer::end_of_line; };
 

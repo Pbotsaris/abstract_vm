@@ -1,0 +1,13 @@
+
+push int8(10)
+
+; spaces do nothing
+
+
+
+push int16(20) ; can still push :)
+
+add
+dump
+
+;;

@@ -105,9 +105,9 @@ struct CLI::Private
      return err.getType() == exceptions::unexpected_token || err.getType() == exceptions::unexpected_end_of_input;
     }
 
-    static bool isEOF(CLI &self, std::string &line)
+    static bool isEOF(CLI &self)
     {
-      return self.m_isfromfile && line == "";
+      return self.m_isfromfile && self.m_filetext.peek() == EOF;
     };
 };
 
@@ -153,7 +153,7 @@ void CLI::mainLoop()
           m_ast.reset();
   }
 
-  if(line == "exit" || Private::isEOF(*this, line))
+  if(line == "exit" || Private::isEOF(*this))
        m_exit = true;
 
   };
