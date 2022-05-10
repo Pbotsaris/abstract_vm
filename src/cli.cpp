@@ -97,6 +97,7 @@ struct CLI::Private
     {
      return err.getType() == exceptions::overflow ||
             err.getType() == exceptions::empty_stack ||
+            err.getType() == exceptions::div_by_zero ||
             err.getType() == exceptions::bad_print_type;
     }
 
@@ -436,6 +437,22 @@ SUBCASE("Stack error: operate on single stack item")
     CHECK(res == expected);
   }
 
+SUBCASE("Operation error: could not divide by zero")
+  {
+    std::string expected = "Could not divide '10000' by Zero.\n";
+    std::stringstream buffer;
+    std::streambuf* prevcoutbuf = std::cout.rdbuf(buffer.rdbuf());
+
+    const char *line = "push int16(10000)\npush int16(0)\ndiv\n;;\nexit\n";
+
+    CLI cli(line);
+    cli.mainLoop();
+
+    std::string res = buffer.str();
+    std::cout.rdbuf(prevcoutbuf);
+
+    CHECK(res == expected);
+  }
 }
 
 

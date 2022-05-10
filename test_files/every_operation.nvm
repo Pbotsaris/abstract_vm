@@ -1,53 +1,209 @@
-; sum
+; addition
 push int8(10)
 push int8(12)
 add
 dump
+pop
+
 push int8(30)
 push int16(300)
 add
 dump
+pop
+
 push int8(30)
 push int32(3000)
 add
 dump
+pop
+
 push int16(400)
 push int16(400)
 add
 dump
+pop
+
 push int16(400)
 push int32(400)
 add
 dump
+pop
+
 push int32(4000)
 push int32(4000)
 add
 dump
+pop
 
-; division
-div
+; print a sep here to help vizualize results
+push int8(45)
+print
+pop
+
+; subtraction
 push int8(10)
 push int8(12)
 sub
 dump
+pop
+
 push int8(30)
 push int16(40)
 sub
 dump
+pop
+
 push int8(30)
 push int32(3000)
 sub
 dump
+pop
+
 push int16(100)
 push int16(400)
 sub
 dump
-push int16(200) ; problem here
+pop
+
+push int16(200) 
 push int32(400)
 sub
 dump
+pop
+
 push int32(1000)
 push int32(4000)
 sub
 dump
+pop
+
+; sep
+push int8(45)
+print
+pop
+
+; division
+push int8(10)
+push int8(2)
+div
+dump
+pop
+
+push int8(-10)
+push int16(3)
+div
+dump
+pop
+
+push int8(30)
+push int32(3000)
+div
+dump
+pop
+
+push int16(500)
+push int16(100)
+div
+dump
+pop
+
+push int16(2) 
+push int32(1)
+div
+dump
+pop
+
+push int32(10000)
+push int32(200)
+div
+dump
+pop
+
+; sep
+push int8(45)
+print
+pop
+
+; multiplication
+
+push int8(2)
+push int8(2)
+mul
+dump
+pop
+
+push int8(-10)
+push int16(3)
+mul
+dump
+pop
+
+push int8(30)
+push int32(3000)
+mul
+dump
+pop
+
+push int16(500)
+push int16(10)
+mul
+dump
+pop
+
+push int16(2) 
+push int32(1)
+mul
+dump
+pop
+
+push int32(10000)
+push int32(200)
+mul
+dump
+pop
+
+; sep
+push int8(45)
+print
+pop
+
+; modulo
+
+push int8(2)
+push int8(2)
+mod
+dump
+pop
+
+push int8(-10)
+push int16(3)
+mod
+dump
+pop
+
+push int8(30)
+push int32(3000)
+mod
+dump
+pop
+
+push int16(500)
+push int16(10)
+mod
+dump
+pop
+
+push int16(2) 
+push int32(1)
+mod
+dump
+pop
+
+push int32(10000)
+push int32(200)
+mod
+dump
+pop
+
+
 ;;

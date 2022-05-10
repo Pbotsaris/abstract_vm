@@ -7,7 +7,7 @@
 
 namespace exceptions
 {
-  enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input, overflow, bad_assert, bad_print_type};
+  enum ExceptionType {empty_stack, unexpected_token, unexpected_end_of_input, overflow, div_by_zero, bad_assert, bad_print_type};
 
   class Exceptions : public std::exception {
 
@@ -54,6 +54,18 @@ namespace exceptions
     template <typename T>
     [[noreturn]]  static void throwE(const std::string &value);
 
+    void                      print() override;
+    ExceptionType            getType() override;
+  };
+
+
+ class DivByZero : public Exceptions
+  {
+   public:
+    static std::string m_value;
+  
+    [[noreturn]]  static void throwE(const std::string &value);
+    
     void                      print() override;
     ExceptionType            getType() override;
   };

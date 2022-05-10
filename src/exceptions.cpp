@@ -97,6 +97,25 @@ exceptions::ExceptionType exceptions::Overflow::getType()
   return exceptions::overflow;
 }
 
+std::string exceptions::DivByZero::m_value;
+
+void exceptions::DivByZero::throwE(const std::string &value)
+{
+     m_value = value;
+    throw exceptions::DivByZero();
+};
+
+void exceptions::DivByZero::print()
+{
+  std::cout << "Could not divide '" << m_value << "' by Zero.\n";
+}
+
+exceptions::ExceptionType exceptions::DivByZero::getType()
+{
+  return exceptions::div_by_zero;
+}
+
+
 /* BAD ASSERT */
 
 std::string exceptions::BadAssert::m_left;

@@ -68,6 +68,10 @@ IOperand *Operands<T>::operator* (const IOperand &rhs) const
 template<typename T>
 IOperand *Operands<T>::operator/ (const IOperand &rhs) const
 {
+
+   if(rhs.toString() == "0")
+      exceptions::DivByZero::throwE(m_value);
+
   eOperandType return_type = std::max (m_type, rhs.getType ());
   T left_side = Private::convert (m_value);
 
